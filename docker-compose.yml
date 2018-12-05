@@ -1,0 +1,29 @@
+version: '3'
+services:
+  postgres:
+    restart: always
+    image: postgres:10
+    environment:
+    - POSTGRES_USER=fibusr
+    - POSTGRES_PASSWORD=fibpass
+    - POSTGRES_DB=fibonacci_db
+    volumes:
+    - ./postgres-data/postgres:/var/lib/postgresql/data
+    ports:
+    - "5434:5432"
+  redis:
+    image: "redis:alpine"
+    ports:
+    - "6378:6379"
+  web:
+    build: ./web
+    environment:
+      FLASK_APP: run.py
+      FLASK_CONFIG: production
+    command: /docker-entrypoint.sh
+    ports:
+     - "8000:8000"
+    depends_on:
+    - postgres
+    - redis
+
