@@ -20,7 +20,6 @@ services:
     environment:
       FLASK_APP: run.py
       FLASK_CONFIG: production
-    command: /docker-entrypoint.sh
     ports:
      - "8000:8000"
     depends_on:
